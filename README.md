@@ -44,7 +44,9 @@ Windows 10 or 11. Most PCs already have Edge WebView2. If Setup asks for it, let
 
 **Try it from this folder.** Double-click `run.bat`. The first run makes a Python environment and installs what it needs.
 
-**Make the installer.** Double-click `build.bat`. You get `installer\out\PlaceStay-1.0.0-Setup.exe`. That Setup file is what people will download from Releases once this is public.
+**Download.** [Place. Stay. 1.0.0 for Windows](https://github.com/HeadAroundIt/place-stay/releases/tag/v1.0.0). Run the Setup file.
+
+**Make the installer.** Double-click `build.bat`. You get `installer\out\PlaceStay-1.0.0-Setup.exe`.
 
 You do not install Python to use the Setup file. You do need Python 3 to run from source or to build.
 
