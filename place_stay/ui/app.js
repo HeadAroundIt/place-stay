@@ -46,6 +46,11 @@ document.addEventListener("keydown", (event) => {
 });
 window.addEventListener("resize", () => layoutMap());
 
+document.addEventListener("selectstart", (event) => {
+  if (event.target.closest("input, textarea")) return;
+  event.preventDefault();
+});
+
 if (previewMode) bootPreview();
 else window.addEventListener("pywebviewready", bootReal);
 

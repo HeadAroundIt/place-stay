@@ -68,7 +68,12 @@ button { cursor: pointer; }
   outline-offset: 2px;
 }
 
-::selection { background: rgba(215, 176, 122, 0.35); }
+::selection { background: transparent; }
+
+.mark, .mark strong, h1, .eyebrow {
+  -webkit-user-select: none;
+  user-select: none;
+}
 
 .app {
   height: 100%;

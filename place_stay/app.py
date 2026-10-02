@@ -11,11 +11,12 @@ from pathlib import Path
 
 def main() -> None:
     from place_stay.store import log
-    from place_stay.winapi import enable_dpi_awareness, set_app_id
+    from place_stay.winapi import allow_dark_titlebar, enable_dpi_awareness, set_app_id
 
     if getattr(sys, "frozen", False):
         os.chdir(str(Path(sys.executable).resolve().parent))
     enable_dpi_awareness()
+    allow_dark_titlebar()
     set_app_id()
     if "--list" in sys.argv:
         _print_windows()
@@ -105,11 +106,13 @@ def _run() -> None:
         min_size=(980, 680),
         background_color="#121110" if theme == "ink" else "#e6e0d6",
         text_select=False,
+        shadow=False,
         hidden=hidden,
     )
     api.attach(window, str(icon_path))
     window.events.closing += api.on_closing
     window.events.shown += api.on_shown
+    window.events.loaded += api.on_shown
     webview.start(api.on_started, gui="edgechromium", http_server=True, icon=str(icon_path))
 
 
@@ -210,17 +213,37 @@ class Api:
                 break
 
     def _style_frame(self) -> None:
+        if getattr(self, "_frame_busy", False):
+            return
+        self._frame_busy = True
+        threading.Thread(target=self._paint_frame, name="place-frame", daemon=True).start()
+
+    def _paint_frame(self) -> None:
         from place_stay.winapi import apply_window_icon, find_titled, style_frame
 
         dark = (self._engine.data["settings"].get("theme") or "ink") == "ink"
-        for _ in range(8):
+
+        def paint() -> bool:
             hwnd = find_titled("Place. Stay.")
-            if hwnd:
-                style_frame(hwnd, dark=dark)
-                apply_window_icon(hwnd, self._icon_path)
-                return
-            if self._stop.wait(0.25):
-                return
+            if not hwnd:
+                return False
+            style_frame(hwnd, dark=dark)
+            apply_window_icon(hwnd, self._icon_path)
+            return True
+
+        try:
+            for _ in range(8):
+                if paint():
+                    break
+                if self._stop.wait(0.25):
+                    return
+            # WebView2 resets the frame after it attaches. Paint again once it has settled.
+            for delay in (0.4, 1.2):
+                if self._stop.wait(delay):
+                    return
+                paint()
+        finally:
+            self._frame_busy = False
 
     def _remember_bounds(self) -> None:
         window = self._window

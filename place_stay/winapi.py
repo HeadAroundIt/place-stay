@@ -180,6 +180,18 @@ def set_app_id() -> None:
     ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID("PlaceStay.App")
 
 
+def allow_dark_titlebar() -> None:
+    """Let Windows paint this app's title bar dark. Call before the window exists."""
+    try:
+        uxtheme = ctypes.WinDLL("uxtheme", use_last_error=True)
+        set_mode = uxtheme[135]
+        set_mode.argtypes = [ctypes.c_int]
+        set_mode.restype = ctypes.c_int
+        set_mode(1)
+    except (AttributeError, OSError):
+        return
+
+
 def mouse_left_down() -> bool:
     return bool(user32.GetAsyncKeyState(0x01) & 0x8000)
 
@@ -399,17 +411,32 @@ def style_frame(hwnd: int, *, dark: bool) -> None:
         return
     handle = wintypes.HWND(hwnd)
     use_dark = ctypes.c_int(1 if dark else 0)
+    # 19 is the Windows 10 name. 20 is the Windows 11 name. Set both.
+    dwmapi.DwmSetWindowAttribute(handle, 19, ctypes.byref(use_dark), ctypes.sizeof(use_dark))
     dwmapi.DwmSetWindowAttribute(handle, 20, ctypes.byref(use_dark), ctypes.sizeof(use_dark))
     if dark:
-        caption = 0x000E0F12  # #12100E in COLORREF
-        text = 0x00E0E7F3
+        caption = 0x00101112  # #121110
+        text = 0x00E8EFF3  # #F3EFE8
     else:
         caption = 0x00D6E0E6  # #E6E0D6
         text = 0x0016191C
-    cap = wintypes.DWORD(caption)
+    color = wintypes.DWORD(caption)
     fg = wintypes.DWORD(text)
-    dwmapi.DwmSetWindowAttribute(handle, 35, ctypes.byref(cap), ctypes.sizeof(cap))
+    # Border, caption, and title text. An unset border stays white.
+    dwmapi.DwmSetWindowAttribute(handle, 34, ctypes.byref(color), ctypes.sizeof(color))
+    dwmapi.DwmSetWindowAttribute(handle, 35, ctypes.byref(color), ctypes.sizeof(color))
     dwmapi.DwmSetWindowAttribute(handle, 36, ctypes.byref(fg), ctypes.sizeof(fg))
+    user32.SetWindowPos.argtypes = [
+        wintypes.HWND,
+        wintypes.HWND,
+        ctypes.c_int,
+        ctypes.c_int,
+        ctypes.c_int,
+        ctypes.c_int,
+        wintypes.UINT,
+    ]
+    user32.SetWindowPos.restype = wintypes.BOOL
+    user32.SetWindowPos(handle, None, 0, 0, 0, 0, 0x0001 | 0x0002 | 0x0004 | 0x0010 | 0x0020)
 
 
 _instance_mutex = None
