@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+*.pyc
+probe_windows.py
+build/
+dist/
+installer/out/
+installer/assets/
+installer/version.iss
+installer/version_info.txt
+place_stay/assets/
+Open Place Stay.vbs
+Open Sticky Desktop.vbs
+sticky_desktop/
+
