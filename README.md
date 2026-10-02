@@ -40,7 +40,7 @@ Save more than one layout if your desk changes: work, evening, a second monitor 
 
 ## Install
 
-Windows 10 or 11. Download [PlaceStay-1.0.0-Setup.exe](https://github.com/HeadAroundIt/place-stay/releases/download/v1.0.0/PlaceStay-1.0.0-Setup.exe) and run it.
+Windows 10 or 11. Download [PlaceStay-1.0.1-Setup.exe](https://github.com/HeadAroundIt/place-stay/releases/download/v1.0.1/PlaceStay-1.0.1-Setup.exe) and run it.
 
 Most PCs already have Edge WebView2. If Setup asks for it, let it install.
 
