@@ -784,6 +784,7 @@ function sampleState(shot) {
     }
   }
   if (shot === "putback") {
+    data.rows = data.rows.filter((row) => row.appName !== "File Explorer");
     const cursor = data.rows.find((row) => row.appName === "Cursor");
     if (cursor) {
       cursor.x = 280;
