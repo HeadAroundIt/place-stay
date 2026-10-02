@@ -40,15 +40,9 @@ Save more than one layout if your desk changes: work, evening, a second monitor 
 
 ## Install
 
-Windows 10 or 11. Most PCs already have Edge WebView2. If Setup asks for it, let it install.
+Windows 10 or 11. Download [PlaceStay-1.0.0-Setup.exe](https://github.com/HeadAroundIt/place-stay/releases/download/v1.0.0/PlaceStay-1.0.0-Setup.exe) and run it.
 
-**Try it from this folder.** Double-click `run.bat`. The first run makes a Python environment and installs what it needs.
-
-**Download.** [Place. Stay. 1.0.0 for Windows](https://github.com/HeadAroundIt/place-stay/releases/tag/v1.0.0). Run the Setup file.
-
-**Make the installer.** Double-click `build.bat`. You get `installer\out\PlaceStay-1.0.0-Setup.exe`.
-
-You do not install Python to use the Setup file. You do need Python 3 to run from source or to build.
+Most PCs already have Edge WebView2. If Setup asks for it, let it install.
 
 **Uninstall.** Use Apps in Windows Settings. Saved layouts stay in your user folder: `%APPDATA%\PlaceStay`.
 
