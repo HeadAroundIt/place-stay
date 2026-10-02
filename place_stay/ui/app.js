@@ -74,8 +74,15 @@ async function poll() {
 }
 
 function bootPreview() {
-  state = sampleState();
+  const params = new URLSearchParams(location.search);
+  const shot = params.get("shot") || "";
+  if (shot) document.documentElement.dataset.shot = shot;
+  state = sampleState(shot);
   render();
+  requestAnimationFrame(() => {
+    layoutMap();
+    document.documentElement.dataset.ready = "1";
+  });
 }
 
 function onClick(event) {
@@ -749,19 +756,19 @@ function esc(value) {
   }[char]));
 }
 
-function sampleState() {
-  return {
+function sampleState(shot) {
+  const data = {
     monitors: [
       { device: "\\\\.\\DISPLAY1", left: -1080, top: -123, width: 1080, height: 1920, workLeft: -1080, workTop: -123, workRight: 0, workBottom: 1757, primary: false, label: "Left screen" },
       { device: "\\\\.\\DISPLAY2", left: 0, top: 0, width: 2560, height: 1440, workLeft: 0, workTop: 0, workRight: 2560, workBottom: 1400, primary: true, label: "Main screen" },
     ],
     rows: [
-      { key: "saved:discord", hwnd: "1", ruleId: "discord", appName: "Discord", title: "Coworking", monitorLabel: "Left screen", sizeLabel: "1042 × 728", status: "in_place", suggested: true, x: -1059, y: 200, width: 1042, height: 900, minimized: false, maximized: false, hint: "" },
-      { key: "saved:cursor", hwnd: "2", ruleId: "cursor", appName: "Cursor", title: "Place. Stay.", monitorLabel: "Main screen", sizeLabel: "1296 × 808", status: "moved", suggested: true, x: 180, y: 120, width: 1100, height: 720, minimized: false, maximized: false, hint: "Saved on the main screen" },
-      { key: "saved:brave", hwnd: "3", ruleId: "brave", appName: "Brave", title: "A saved page", monitorLabel: "Main screen", sizeLabel: "Minimized", status: "in_place", suggested: true, x: 684, y: 171, width: 1260, height: 867, minimized: true, maximized: false, hint: "" },
-      { key: "live:4", hwnd: "4", ruleId: null, appName: "Notepad", title: "Untitled", monitorLabel: "Main screen", sizeLabel: "640 × 480", status: "new", suggested: true, x: 900, y: 360, width: 640, height: 480, minimized: false, maximized: false, hint: "" },
+      { key: "saved:discord", hwnd: "1", ruleId: "discord", appName: "Discord", title: "Coworking", monitorLabel: "Left screen", sizeLabel: "1000 × 1500", status: "in_place", suggested: true, x: -1040, y: -40, width: 1000, height: 1500, minimized: false, maximized: false, hint: "" },
+      { key: "saved:cursor", hwnd: "2", ruleId: "cursor", appName: "Cursor", title: "Place. Stay.", monitorLabel: "Main screen", sizeLabel: "1280 × 900", status: "moved", suggested: true, x: 48, y: 40, width: 1280, height: 900, minimized: false, maximized: false, hint: "Saved on the main screen" },
+      { key: "saved:brave", hwnd: "3", ruleId: "brave", appName: "Brave", title: "A saved page", monitorLabel: "Main screen", sizeLabel: "Minimized", status: "in_place", suggested: true, x: 1400, y: 80, width: 1000, height: 700, minimized: true, maximized: false, hint: "" },
+      { key: "live:4", hwnd: "4", ruleId: null, appName: "Notepad", title: "Untitled", monitorLabel: "Main screen", sizeLabel: "640 × 420", status: "new", suggested: true, x: 1760, y: 860, width: 700, height: 460, minimized: false, maximized: false, hint: "" },
       { key: "saved:steam", hwnd: null, ruleId: "steam", appName: "Steam", title: "Steam", monitorLabel: "Left screen", sizeLabel: "1080 × 860", status: "closed", suggested: true, x: null, y: null, width: 1080, height: 860, minimized: false, maximized: false, hint: "Still remembered for the next time it opens" },
-      { key: "live:5", hwnd: "5", ruleId: null, appName: "File Explorer", title: "Documents", monitorLabel: "Main screen", sizeLabel: "900 × 600", status: "new", suggested: true, x: 1400, y: 180, width: 900, height: 600, minimized: false, maximized: false, hint: "" },
+      { key: "live:5", hwnd: "5", ruleId: null, appName: "File Explorer", title: "Documents", monitorLabel: "Main screen", sizeLabel: "1080 × 720", status: "new", suggested: true, x: 1400, y: 40, width: 1080, height: 720, minimized: false, maximized: false, hint: "" },
     ],
     layouts: [
       { id: "work", name: "Work", savedLabel: "Saved today", count: 4, active: true },
@@ -771,4 +778,19 @@ function sampleState() {
     activity: "",
     activityAt: 0,
   };
+  if (shot === "desk") {
+    for (const row of data.rows) {
+      if (row.status === "moved") row.status = "in_place";
+    }
+  }
+  if (shot === "putback") {
+    const cursor = data.rows.find((row) => row.appName === "Cursor");
+    if (cursor) {
+      cursor.x = 280;
+      cursor.y = 220;
+    }
+    data.activity = "Cursor is out of place.";
+    data.activityAt = Date.now() / 1000;
+  }
+  return data;
 }

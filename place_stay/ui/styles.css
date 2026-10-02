@@ -752,3 +752,78 @@ html[data-theme="paper"] .row.on { background: rgba(36, 28, 20, 0.04); }
   border-radius: 99px;
   border: 2px solid transparent;
 }
+
+/* README shots. Only applied when capture_shots.py asks for one. */
+html[data-shot],
+html[data-shot] body {
+  background: transparent;
+}
+
+html[data-shot] * {
+  transition: none !important;
+  animation: none !important;
+}
+
+html[data-shot] button { cursor: default; }
+
+html[data-shot] .app {
+  height: 100%;
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+html[data-shot="desk"] .rail,
+html[data-shot="desk"] .list-card,
+html[data-shot="desk"] .actions,
+html[data-shot="desk"] .lede,
+html[data-shot="desk"] .title-row .text,
+html[data-shot="desk"] .title-row .danger,
+html[data-shot="putback"] .rail,
+html[data-shot="putback"] .list-card,
+html[data-shot="putback"] .lede,
+html[data-shot="putback"] .title-row .text,
+html[data-shot="putback"] .title-row .danger,
+html[data-shot="windows"] .rail,
+html[data-shot="windows"] .top,
+html[data-shot="windows"] .map-card {
+  display: none;
+}
+
+html[data-shot="desk"] .app,
+html[data-shot="putback"] .app,
+html[data-shot="windows"] .app {
+  display: block;
+}
+
+html[data-shot="desk"] .main,
+html[data-shot="putback"] .main {
+  height: 100%;
+  padding: 22px 26px 20px;
+  overflow: hidden;
+}
+
+html[data-shot="desk"] .map-card,
+html[data-shot="putback"] .map-card {
+  flex: 1;
+  min-height: 0;
+}
+
+html[data-shot="desk"] .map,
+html[data-shot="putback"] .map {
+  height: 100%;
+  min-height: 0;
+}
+
+html[data-shot="windows"] .main {
+  height: 100%;
+  padding: 16px;
+  overflow: hidden;
+}
+
+html[data-shot="windows"] .list-card {
+  height: 100%;
+}
+
+html[data-shot="windows"] .rows {
+  overflow: hidden;
+}
