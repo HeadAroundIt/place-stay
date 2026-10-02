@@ -2,7 +2,7 @@
 
 Place. Stay. is a Windows app for a desk with more than one screen. You put each window where it belongs. Next time those apps open, they come back here.
 
-It is a dog command. Place: go to your spot. Stay: do not wander off. Discord on the left. Cursor on the main screen. A browser where you left it.
+Place: go to your spot. Stay: do not wander off. Discord on the left. Cursor on the main screen. A browser where you left it.
 
 Windows 10 and 11. Not affiliated with Microsoft.
 
