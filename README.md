@@ -22,7 +22,7 @@ A map of your screens, and a list of what is open. Check the windows that matter
 
 **When saved apps open.** Turn this on and each saved window is moved once, onto its screen. Drag it afterward and it stays where you dragged it. It is not glued there.
 
-**Start when I sign in.** It waits in the tray. It can put windows back, including ones already open.
+**Start when Windows starts.** It waits in the tray. It can put windows back, including ones already open.
 
 Ink and Paper themes. A desktop shortcut if you want one. Close the window and it hides in the tray. Quit from there, or from the app.
 

@@ -463,7 +463,7 @@ function view() {
       <button class="ghost block rail-save" type="button" data-act="save">${layout ? "Save as new layout" : "Save this desktop"}</button>
       <div class="settings">
         ${setting("placeOnOpen", "When saved apps open", "Move each saved window once, onto its screen. Dragging it afterward leaves it there.")}
-        ${setting("runAtStartup", "Start when I sign in", "It waits in the tray and puts windows back, including ones already open.")}
+        ${setting("runAtStartup", "Start when Windows starts", "It waits in the tray and puts windows back, including ones already open.")}
         <div class="rail-links">
           <button class="text" type="button" data-act="shortcut">${state.settings.hasDesktopShortcut ? "Refresh desktop shortcut" : "Add a desktop shortcut"}</button>
           <button class="text" type="button" data-act="quit">Quit</button>
