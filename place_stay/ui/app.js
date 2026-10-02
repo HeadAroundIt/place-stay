@@ -784,14 +784,16 @@ function sampleState(shot) {
     }
   }
   if (shot === "putback") {
-    data.rows = data.rows.filter((row) => row.appName !== "File Explorer");
-    const cursor = data.rows.find((row) => row.appName === "Cursor");
-    if (cursor) {
-      cursor.x = 280;
-      cursor.y = 220;
-    }
-    data.activity = "Cursor is out of place.";
-    data.activityAt = Date.now() / 1000;
+    data.rows = [
+      { key: "saved:discord", hwnd: "1", ruleId: "discord", appName: "Discord", title: "Coworking", monitorLabel: "Left screen", sizeLabel: "1000 × 980", status: "in_place", suggested: true, x: -1044, y: -80, width: 1008, height: 980, minimized: false, maximized: false, hint: "" },
+      { key: "saved:spotify", hwnd: "6", ruleId: "spotify", appName: "Spotify", title: "Focus", monitorLabel: "Left screen", sizeLabel: "1000 × 680", status: "in_place", suggested: true, x: -1044, y: 940, width: 1008, height: 740, minimized: false, maximized: false, hint: "" },
+      { key: "saved:cursor", hwnd: "2", ruleId: "cursor", appName: "Cursor", title: "Place. Stay.", monitorLabel: "Main screen", sizeLabel: "1180 × 740", status: "in_place", suggested: true, x: 56, y: 48, width: 1180, height: 740, minimized: false, maximized: false, hint: "" },
+      { key: "saved:brave", hwnd: "3", ruleId: "brave", appName: "Brave", title: "A saved page", monitorLabel: "Main screen", sizeLabel: "1140 × 740", status: "in_place", suggested: true, x: 1296, y: 48, width: 1188, height: 740, minimized: false, maximized: false, hint: "" },
+      { key: "saved:slack", hwnd: "7", ruleId: "slack", appName: "Slack", title: "Studio", monitorLabel: "Main screen", sizeLabel: "1180 × 460", status: "in_place", suggested: true, x: 56, y: 836, width: 1180, height: 500, minimized: false, maximized: false, hint: "" },
+      { key: "live:4", hwnd: "4", ruleId: null, appName: "Notepad", title: "Untitled", monitorLabel: "Main screen", sizeLabel: "1140 × 460", status: "new", suggested: true, x: 1296, y: 836, width: 1188, height: 500, minimized: false, maximized: false, hint: "" },
+    ];
+    data.activity = "";
+    data.activityAt = 0;
   }
   return data;
 }
